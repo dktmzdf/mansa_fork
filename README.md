@@ -1,240 +1,161 @@
 <img src="docs/images/logo.svg" width="72" alt="MANSA 로고" />
 
-# MANSA
+# MANSA — 박규진(dktmzdf) 기여 정리
 
 **Manual & Safety Assistant — 매뉴얼을 물으면 안전이 따라옵니다**
 
-<img src="docs/images/login.png" width="900" alt="MANSA 로그인 화면" />
+현대 AI 인사이트 캠퍼스 6팀 프로젝트 [HYUNDAI-AI-team6/mansa](https://github.com/HYUNDAI-AI-team6/mansa)를 포크한 저장소입니다.
+이 문서는 팀 프로젝트에서 **제가 맡아 구현한 부분**을 정리합니다.
+프로젝트 전체 소개·실행 방법·폴더 구조는 [README_Fork.md](README_Fork.md)(원본 README)를 참고해 주세요.
 
-## 🔎 MANSA 소개
+## 프로젝트 한 줄 소개
 
-> 현장 엔지니어가 설비 매뉴얼과 안전 기준을 따로 찾지 않고, 질문 하나로 작업 절차·사양 수치·안전 요건을 출처와 함께 확인하도록 돕는 질의응답 서비스
+현장 엔지니어가 설비 매뉴얼과 안전 기준을 따로 찾지 않고, 질문 하나로 작업 절차·사양 수치·안전 요건을 출처와 함께 확인하도록 돕는 RAG 기반 질의응답 서비스입니다.
+(Python 3.11 · Gradio · LangChain · ChromaDB · MySQL)
 
-현대 AI 인사이트 캠퍼스 6팀 프로젝트입니다.
+## 담당 파트
 
-### 현장의 문제
-
-- 작업 절차는 매뉴얼에, 지켜야 할 기준은 법규·지침에 흩어져 있어 하나의 작업을 확인하려면 여러 문서를 열어야 합니다.
-- 매뉴얼의 수치와 안전 기준의 수치가 다를 때 어느 쪽을 따라야 하는지 직접 비교해야 합니다.
-- 답을 찾아도 근거 문서와 쪽수를 다시 확인해야 믿고 작업할 수 있습니다.
-
-### MANSA는 이렇게 해결해요
-
-1. 흩어진 문서 → 매뉴얼과 안전 문서를 함께 검색해 `작업 절차 · 사양 수치 · 안전 요건`을 한 번에 보여 줍니다.
-2. 수치 불일치 → 매뉴얼과 안전 기준의 값을 코드로 비교해 `기준 차이`로 알려 줍니다.
-3. 근거 불안 → 답변마다 `출처와 원문`을 오른쪽에 보여 주고, 안전 요건에는 "AI가 찾은 참고 정보이며 최종 판단은 안전관리자 확인"을 함께 표시합니다.
-4. 모호한 질문 → 설비 모델이나 부품이 불분명하면 `되묻기`로 범위를 좁히고, 문서에 없는 질문은 `답변 불가`로 안내합니다.
-
-## ✨ 주요 기능
-
-### 사용자
-
-| 메뉴 | 기능 |
+| 영역 | 내용 |
 | --- | --- |
-| 기술 Q&A | 질문하면 작업 절차·사양 수치·안전 요건·기준 차이를 출처와 함께 답변, 근거 원문 확인, 되묻기, 이어서 질문 |
-| 질문 기록 | 지난 대화 목록을 보고 누르면 그 대화를 다시 열람 |
-| 문서 조회 | 등록된 매뉴얼·안전 문서를 유형·부서·이름으로 찾고 PDF 열기 |
-| 고객센터 | MANSA 사용법을 챗봇에게 질문, 해결되지 않으면 관리자 연결 |
+| 관리자 평가 | 테스트셋 → 응답 수집 → 채점 → 결과 저장·화면 표시까지 평가 기능 전체(백엔드·화면) |
+| 고객센터 챗봇 | LLM tool calling 기반 MANSA 사용법 안내 챗봇, 안내 데이터 외부 파일화 |
+| 사용자 문서 조회 | 목데이터 화면을 DB 문서 목록과 연결 |
+| 태그 필터 검색 | 벡터 DB에서 태그로 필터링한 뒤 유사도 검색하는 API |
+| 협업 규칙 | Python 개발 가이드·AGENTS.md(AI 코딩 도구 공통 규칙), gitignore, 서버 실행 배치 파일 |
 
-### 관리자
+## 기여 요약
 
-| 메뉴 | 기능 |
+| 항목 | 수치 |
 | --- | --- |
-| 문서 관리 | 문서 현황과 처리 상태(처리 중·완료·실패) 확인, PDF 열기, 삭제 |
-| 문서 업로드 | PDF를 올리면 유형(기술 문서·안전 문서)과 부서를 지정해 등록 |
-| 기준정보 | 부서, 설비 모델, 작업 분류표·관계표, 동의어 관리 |
-| 평가 | 질문 세트로 검색·답변 품질을 실행하고 결과 확인, CSV 내보내기 |
-| 질문 테스트 | 관리자가 질문을 직접 해 보며 답변 확인(질문 기록에는 남지 않음) |
-| 회원 관리 | 회원 등록·수정·삭제와 권한 부여 |
+| 커밋 (머지 제외) | 34개 · 130개 파일 · +7,298 / −1,036줄 |
+| 작성한 이슈 | 8개 (모두 완료) |
+| 작성한 PR | 12개 (모두 머지) |
+| 코드 리뷰한 PR | 46개 |
 
-## 🖥️ 화면
+기간: 2026-10-20 ~ 2026-10-30
 
-| 기술 Q&A · 답변 | 고객센터 |
-| :---: | :---: |
-| <img src="docs/images/qa-answer.png" width="440" alt="기술 Q&A 답변 화면" /> | <img src="docs/images/support.png" width="440" alt="고객센터 화면" /> |
+---
 
-| 관리자 · 문서 관리 | 관리자 · 기준정보 |
-| :---: | :---: |
-| <img src="docs/images/admin-documents.png" width="440" alt="문서 관리 화면" /> | <img src="docs/images/admin-master.png" width="440" alt="기준정보 화면" /> |
+## 1. 관리자 평가 기능
 
-> 화면의 문서·수치(`[모델 A]`, `[값]` 등)는 시연용 예시 데이터입니다.
+> 이슈 [#31](https://github.com/HYUNDAI-AI-team6/mansa/issues/31), [#78](https://github.com/HYUNDAI-AI-team6/mansa/issues/78), [#124](https://github.com/HYUNDAI-AI-team6/mansa/issues/124)
+> PR [#46](https://github.com/HYUNDAI-AI-team6/mansa/pull/46), [#84](https://github.com/HYUNDAI-AI-team6/mansa/pull/84), [#159](https://github.com/HYUNDAI-AI-team6/mansa/pull/159)
+> 코드: `mansa/features/evaluation/`, `mansa/ui/evaluation.py` · 문서: [docs/Evaluation.md](docs/Evaluation.md)
 
-## ⚙️ 동작 방식
+테스트셋 문항을 Q&A 파이프라인에 보내 답변을 받고, 채점해서 지표·실패 사례·지연·토큰을 화면과 파일로 보여 주는 관리자 기능입니다.
 
 ```
-문서 등록   PDF 업로드 → 텍스트 추출 → 청킹 → 임베딩 → 벡터 DB(Chroma) 색인
-
-질문 처리   질문 입력
-            → 질문 분석 (LLM: 설비 모델·작업 파악, 되묻기·답변 불가 판단)
-            → 검색 (벡터 + BM25, 분류표·관계표로 검색어 보강)
-            → 답변 생성 (LLM: 절차·사양·안전 요건·기준 차이)
-            → 출처·수치 검사 후 표시
+eval/testsets/tech_qa.json ─ 테스트셋 읽기·검증 (testset.py)
+        ▼
+문항별 답변 수집 (answerer.py → QAService)        진행률: 답변 n/N
+        ▼
+질문-답변 세트 저장 (storage.py)
+        ▼
+규칙 채점 + LLM-as-judge (scoring.py, judge.py)   진행률: 채점 n/N
+        ▼
+결과 JSON·CSV 저장 → 평가 화면 표시
 ```
 
-질문 한 번에 LLM은 두 번(질문 분석, 답변 생성) 호출하는 것을 기준으로 설계했습니다.
+**지표 5개**: 검색 적중률, 수치 정확도, 출처 정확도, 과잉 첨부율, 표현 일관성 + 평균 지연·평균 토큰
 
-## 🚧 개발 현황
+### 주요 구현
 
-- **화면:** 사용자·관리자 화면 전체를 `mansa/ui/`에 구현했습니다. 현재는 `ui/mock_data.py`의 목데이터로 동작하며, 각 기능이 완성되면 화면 코드의 목데이터 호출만 실제 함수로 바꿉니다.
-- **연결 중:** 로그인·회원 관리, 문서 업로드·처리, 벡터 DB 검색, LLM 질문 분석·답변, 평가 기능을 `mansa/features/`와 `mansa/core/`에 순차적으로 붙이고 있습니다.
-- **계속 목데이터:** 고객센터의 관리자 연결은 시연을 위한 화면만 제공합니다.
+- **수치 정확도 채점 — 정규식 규칙 + LLM 보조**
+  - 부호·숫자·단위(대소문자 포함)가 모두 같아야 정답 처리 (`MPa` ≠ `mPa`, `-1000 kg` ≠ `1000 kg`)
+  - 천 단위 쉼표, 범위(`5-10 mm`), 분수, 복합 단위(`N·m`), 옴(Ω) 단위 처리
+  - 규칙이 놓친 수치만 채점 LLM 판정을 쓰되, LLM이 제시한 근거 문장이 답변에 실제로 있고 정답 숫자를 포함할 때만 인정해 환각·단위 환산을 차단
+  - 규칙과 LLM 판정이 엇갈린 경우 `LLM 통과` / `LLM 이견`으로 따로 기록
+- **단계적 교체가 가능한 구조**
+  - 응답기·채점기를 `Answerer` / `Judge` Protocol로 분리
+  - Q&A 파이프라인이 완성되기 전에는 Codex CLI로 프로토타입을 만들고([#46](https://github.com/HYUNDAI-AI-team6/mansa/pull/46)), 팀 LLM 모듈이 나오자 교체([#84](https://github.com/HYUNDAI-AI-team6/mansa/pull/84)), 최종적으로 실제 `QAService`를 호출하는 `QaAnswerer`로 교체([#159](https://github.com/HYUNDAI-AI-team6/mansa/pull/159))
+- **실제 RAG 지표 측정** ([#159](https://github.com/HYUNDAI-AI-team6/mansa/pull/159))
+  - `RecordingRetriever`로 매뉴얼·안전 문서 검색 결과를 기록해 검색 적중률·출처 정확도·과잉 첨부율을 실제로 계산
+  - `get_usage_metadata_callback()`으로 질문 분석·답변 생성·재생성 호출의 토큰을 합산
+  - 정답 근거 비교 단위를 청크 ID에서 `파일명#p페이지`로 바꿔, 문서를 다시 올려도 테스트셋이 깨지지 않도록 함
+  - 검색 적중률 기준을 "하나라도 검색됨"에서 "문항별 재현율 60% 이상"으로 강화
+  - 평가 질문 50문항과 정답표 작성
+- **오류 처리**
+  - LLM 호출 실패(시간 초과, JSON 해석 실패, 검열 응답)가 나도 평가가 멈추지 않고 나머지 문항을 계속 진행, 실패는 "LLM 오류" 목록에 별도 기록
+  - 평가는 앱 전체에서 동시에 하나만 실행
+- **결과 저장**: 실행마다 `{run_id}_answers.json`, `_result.json`, `_result.csv`(엑셀용 UTF-8 BOM) 생성, 저장된 답변으로 재채점 가능
+- **테스트**: 채점·응답기·테스트셋·저장·러너 단위 테스트 작성
 
-## 🛠️ Tech Stack & Library
+## 2. 고객센터 챗봇
 
-| 기술 / 라이브러리 | 목적 |
-| --- | --- |
-| **Python 3.11.9** | 개발 기준 언어 버전 |
-| **uv** | 가상환경과 패키지 버전을 `pyproject.toml`·`uv.lock`으로 일관되게 관리 |
-| **Gradio 6.30** | 질문 입력과 답변 표시 화면을 Python으로 빠르게 구성 |
-| **LangChain** (`langchain-openai`) | 프롬프트 → 모델 → 결과 변환을 체인으로 연결해 LLM 호출 |
-| **ChromaDB** | 문서 조각의 임베딩 저장과 벡터 검색 |
-| **MySQL (Railway)** | 회원·문서·기준정보 등 관계형 데이터 저장 |
-| **SQLAlchemy / PyMySQL** | DB 접속과 쿼리 실행 |
-| **python-dotenv** | `.env`로 API 키와 접속 정보를 코드 밖에서 관리 |
+> 이슈 [#91](https://github.com/HYUNDAI-AI-team6/mansa/issues/91), [#146](https://github.com/HYUNDAI-AI-team6/mansa/issues/146)
+> PR [#100](https://github.com/HYUNDAI-AI-team6/mansa/pull/100), [#162](https://github.com/HYUNDAI-AI-team6/mansa/pull/162), [#164](https://github.com/HYUNDAI-AI-team6/mansa/pull/164)
+> 코드: `mansa/features/support/`, `mansa/data/support/guides.json`, `mansa/ui/support.py`
 
-## 🚀 시작하기
+<img src="docs/images/support.png" width="640" alt="고객센터 화면" />
 
-### 준비물
+MANSA 사용법을 묻는 질문에 LLM이 알맞은 안내 주제를 골라 답하는 챗봇입니다.
 
-- [uv](https://docs.astral.sh/uv/getting-started/installation/) (Python 3.11.9는 uv가 필요할 때 내려받습니다)
-- Git
-- 지원 운영체제: macOS / Windows
+- **Tool calling 기반 응답**
+  - `core/llm.py`에 도구를 붙여 LLM을 호출하는 `choose_tool()` 추가 (시간 초과 재시도, `LlmError` 변환)
+  - LLM이 `GetGuide(topic)` 도구로 안내 주제를 고르면 미리 작성한 안내 문구로 답변 → 사용법 안내에서 환각을 줄임
+  - 기술 질문은 기술 Q&A로, 안내에 없는 질문은 관리자 연결로 유도
+  - LLM 설정 없음·호출 실패·알 수 없는 주제일 때는 기본 안내 문구로 대체
+- **안내 데이터를 코드 밖 JSON으로 분리** ([#162](https://github.com/HYUNDAI-AI-team6/mansa/pull/162))
+  - 이전에는 주제 하나를 추가하려면 dict·`Literal`·`Field(description)` 세 곳을 함께 고쳐야 했음
+  - 이제 `guides.json`만 수정하면 앱 시작 시 `pydantic.create_model`로 도구 스키마를 자동 생성
+  - id 중복, 빈 설명, `steps`/`text` 동시 지정 등 잘못된 데이터는 앱 시작 단계에서 `ValueError`로 막음
+  - 안내 주제를 5개 → 19개로 확장 (로그인, 되묻기, 답변 불가, 근거 확인, 문서 조회 등)
+- **코드 리뷰 반영**: 툴 호출 내용이 로그에 그대로 찍히던 문제, 예상하지 못한 인자에서 크래시 나던 문제 수정
 
-### 실행
+## 3. 사용자 문서 조회
 
-```bash
-git clone https://github.com/HYUNDAI-AI-team6/mansa.git
-cd mansa/mansa
+> 이슈 [#127](https://github.com/HYUNDAI-AI-team6/mansa/issues/127) · PR [#130](https://github.com/HYUNDAI-AI-team6/mansa/pull/130) · 코드: `mansa/ui/doc_view.py`
 
-uv sync --locked
-uv run --locked python app.py
-```
+- 목데이터 대신 DB `documents_info`를 읽도록 변경 (관리자 문서 관리의 `load_docs()` 재사용)
+- 처리 상태가 `완료`인 문서만 사용자에게 노출
+- 부서 선택 목록을 완료 문서의 부서로 구성, 메뉴 진입·필터 변경 시마다 최신 상태 반영
+- 순환 import를 피하도록 구조 조정, 단위 테스트 작성 (DB 없이 가짜 함수로 대체)
 
-터미널에 표시되는 주소(기본 `http://127.0.0.1:7860`)를 브라우저에서 엽니다.
-지금은 목데이터로 동작하므로 아이디와 비밀번호에 아무 값이나 입력하면 로그인됩니다.
-"관리자 계정으로 로그인"을 누르면 관리자 화면으로 들어갑니다.
+## 4. 태그 필터 유사도 검색 API
 
-### 환경변수
+> 이슈 [#104](https://github.com/HYUNDAI-AI-team6/mansa/issues/104) · PR [#123](https://github.com/HYUNDAI-AI-team6/mansa/pull/123) · 코드: `mansa/util/tag_search.py`
 
-DB·LLM·벡터 DB 연결 기능을 사용할 때는 `.env`가 필요합니다. 화면만 확인할 때는 없어도 실행됩니다.
+- ChromaDB에서 청크 태그로 먼저 필터링한 뒤 벡터 유사도 검색을 하는 API 추가
 
-```bash
-cp .env.example .env        # Windows: copy .env.example .env
-```
+## 5. 협업 환경
 
-`.env`의 값은 팀에서 공유받은 값으로 채웁니다. API 키와 비밀번호는 코드나 커밋에 넣지 않습니다.
+> PR [#3](https://github.com/HYUNDAI-AI-team6/mansa/pull/3), [#12](https://github.com/HYUNDAI-AI-team6/mansa/pull/12), [#18](https://github.com/HYUNDAI-AI-team6/mansa/pull/18), [#51](https://github.com/HYUNDAI-AI-team6/mansa/pull/51)
 
-| 변수 | 설명 |
-| --- | --- |
-| `DATABASE_URL` | Railway MySQL 접속 주소 |
-| `LLM_API_KEY` | LLM API 키 |
-| `LLM_MODEL` | 사용할 LLM 모델 이름 |
-| `TECH_CHROMA_HOST` · `SECURE_CHROMA_HOST` · `CHROMA_PORT` | Railway Chroma 벡터 DB 접속 정보 |
+- [Python 개발 가이드](docs/dev-stack-python.md)와 [AGENTS.md](AGENTS.md)(AI 코딩 도구 공통 작업 규칙) 작성 — 팀원 모두가 AI 도구를 쓰는 환경에서 비밀값 관리, 위험 명령 금지, 최소 수정, Git 방식 등을 통일
+- 깨진 문서 링크 수정, `.gitignore`에 Claude·Codex 스킬 폴더와 평가 결과 폴더 추가
+- Windows용 서버 실행 배치 파일(`Execute_Server.bat`) 추가
 
-### 테스트
+## 6. 코드 리뷰
 
-```bash
-uv run --locked python -B -m unittest discover -s tests -v
-```
+팀원 PR **46개**를 리뷰했습니다. 검색(BM25·RRF·태그 순위), 답변 생성·되묻기, 문서 추출·청킹·임베딩, DB 연결·세션, 화면 연결 등 프로젝트 대부분의 기능 PR이 포함됩니다.
 
-## 📁 Foldering
+---
 
-```
-📁 mansa (저장소)
-├── 📁 .github                 # 이슈·PR 템플릿
-├── 📁 docs                    # 개발 문서, README 화면 캡처
-├── 📝 AGENTS.md               # AI 코딩 도구 공통 규칙
-├── 📝 README.md
-│
-└── 📁 mansa                   # 앱 (uv 프로젝트 루트)
-    ├── 📝 app.py              # Gradio 실행 진입점
-    ├── 📝 config.py           # 환경변수 읽기
-    ├── 📝 pyproject.toml
-    ├── 📝 uv.lock
-    │
-    ├── 📁 core                # DB 연결, LLM 호출 등 공통 핵심 기능
-    ├── 📁 features            # 기능별 로직
-    │   ├── 📁 auth            #   로그인·회원
-    │   ├── 📁 documents       #   문서 관리
-    │   ├── 📁 processing      #   PDF 추출·청킹
-    │   ├── 📁 llm             #   질문 분석·답변
-    │   ├── 📁 retrieval       #   임베딩·검색
-    │   └── 📁 dashboard
-    ├── 📁 ui                  # Gradio 화면 (login, qa, support, documents, ...)
-    │   ├── 📁 assets          #   CSS, 아이콘
-    │   └── 📝 mock_data.py    #   기능 연결 전 목데이터
-    ├── 📁 util                # MySQL·벡터 DB 접속 도구
-    └── 📁 tests
-```
+## 작성 이슈·PR 목록
 
-폴더별 역할은 [프로젝트 구조 설명서](docs/PROJECT_STRUCTURE.md)에 자세히 정리했습니다.
-
-## 👥 Team
-
-| 이름 | 담당 |
-| :---: | --- |
-| 류영걸 | MySQL · ChromaDB 연결, 환경 변수, 로그인 · 세션 · 회원 관리, 문서 관리 화면(DB 연결) |
-| 박규진 | 관리자 평가(백엔드 · 화면), 고객센터 챗봇, 사용자 문서 조회, 태그 필터 검색, 협업 규칙 |
-| 장영균 | 문서 추출 · 청킹 · 태그 · 임베딩 검증, DocumentService(등록 · 조회 · 상태 · 결과 기록) |
-| 박정환 | 화면 전체 틀, 기준정보, 문서 처리 파이프라인 · 삭제 · 업로드 흐름 · 화면 연결, 기준 차이 비교 |
-| 이세림 | 질문 분석 · QAService 처리 순서 · 답변 불가 · 안전 문구 · 안전 문서 검색, LLM 호출 · 임베딩 |
-| 강병훈 | 검색(BM25 · 태그 · RRF) · 답변 생성 · 되묻기 · 질문 기록 · 근거 원문, 기술 Q&A 화면 연결 |
-
-## 📣 Convention
-
-자세한 내용은 [Git 협업 컨벤션](docs/GIT_CONVENTION.md)을 따릅니다.
-
-| 대상 | 형식 | 예시 |
+| 구분 | 번호 | 제목 |
 | --- | --- | --- |
-| 커밋 | `type: 작업 내용` (한국어) | `feat: 로그인 API 구현` |
-| 브랜치 | `type/이슈번호-작업내용` | `feat/17-login-api` |
-| 이슈 | `[type] 작업 내용` | `[feat] 로그인 API 구현` |
-| PR | `[type] 작업 내용 (#이슈번호)` | `[feat] 로그인 API 구현 (#17)` |
+| 이슈 | [#11](https://github.com/HYUNDAI-AI-team6/mansa/issues/11) | 깨진 문서 url 수정 및 gitIgnore 추가 |
+| 이슈 | [#17](https://github.com/HYUNDAI-AI-team6/mansa/issues/17) | gitignore에 클로드 및 코덱스 스킬 폴더 추가 |
+| 이슈 | [#31](https://github.com/HYUNDAI-AI-team6/mansa/issues/31) | 관리자 평가 페이지 구현 |
+| 이슈 | [#78](https://github.com/HYUNDAI-AI-team6/mansa/issues/78) | 코덱스 호출을 구현된 LLM으로 교체 |
+| 이슈 | [#91](https://github.com/HYUNDAI-AI-team6/mansa/issues/91) | 고객센터 LLM 구현 |
+| 이슈 | [#124](https://github.com/HYUNDAI-AI-team6/mansa/issues/124) | 평가쪽 제대로 동작하지 않는 문제 수정 |
+| 이슈 | [#127](https://github.com/HYUNDAI-AI-team6/mansa/issues/127) | 사용자의 문서 조회 페이지 작성 |
+| 이슈 | [#146](https://github.com/HYUNDAI-AI-team6/mansa/issues/146) | 고객센터 FAQ 데이터 추가 |
+| PR | [#3](https://github.com/HYUNDAI-AI-team6/mansa/pull/3) | 파이썬 컨벤션 및 AGENTS.md 올림 |
+| PR | [#12](https://github.com/HYUNDAI-AI-team6/mansa/pull/12) | 깨진 문서 url 수정 및 gitignore 수정 |
+| PR | [#18](https://github.com/HYUNDAI-AI-team6/mansa/pull/18) | gitIgnore 수정 |
+| PR | [#46](https://github.com/HYUNDAI-AI-team6/mansa/pull/46) | 관리자 평가 페이지 구현 |
+| PR | [#51](https://github.com/HYUNDAI-AI-team6/mansa/pull/51) | 서버 실행시키는 배치파일 추가 |
+| PR | [#84](https://github.com/HYUNDAI-AI-team6/mansa/pull/84) | 코덱스 호출을 구현된 LLM으로 교체 |
+| PR | [#100](https://github.com/HYUNDAI-AI-team6/mansa/pull/100) | 고객센터 LLM 구현 |
+| PR | [#123](https://github.com/HYUNDAI-AI-team6/mansa/pull/123) | 태그 유사도 검색할수 있는 api 추가 |
+| PR | [#130](https://github.com/HYUNDAI-AI-team6/mansa/pull/130) | 문서 조회 구현 |
+| PR | [#159](https://github.com/HYUNDAI-AI-team6/mansa/pull/159) | 평가쪽 제대로 동작하지 않는 문제 수정 |
+| PR | [#162](https://github.com/HYUNDAI-AI-team6/mansa/pull/162) | mansa 사용법 데이터 추가로 고객센터 대응 개선 |
+| PR | [#164](https://github.com/HYUNDAI-AI-team6/mansa/pull/164) | `__init__.py` 옮김 |
 
-| 타입 | 사용하는 부분 |
-| :---: | --- |
-| `feat` | 새로운 기능 추가 |
-| `fix` | 버그 수정 |
-| `design` | CSS 등 사용자 UI 디자인 변경 |
-| `refactor` | 기능 변경 없는 코드 구조 개선 |
-| `docs` | README 등 문서 작성·수정 |
-| `test` | 테스트 코드 추가·수정 |
-| `build` | uv 등 빌드·의존성 변경 |
-| `chore` | 기타 유지보수·설정 작업 |
+## 사용 기술
 
-### 코드 스타일
-
-Python 3.11 기준이며 패키지는 `uv add`로 추가하고 `uv.lock`은 직접 수정하지 않습니다. 자세한 기준은 [Python 개발 가이드](docs/dev-stack-python.md)를 따릅니다.
-
-## 🐾 Git Flow
-
-**Default Branch & PR Target : `develop`**
-
-`main`에는 직접 푸시하지 않습니다. 모든 작업은 `develop`을 기준으로 진행하고, 개발이 끝나면 `develop`을 `main`에 합칩니다.
-
-```
-1. 작업할 내용에 대해 이슈를 만든다. (이슈 제목: [type] 작업 내용)
-
-2. 최신 develop 브랜치에서 새 브랜치를 만든다. (브랜치 이름: type/이슈번호-작업내용)
-   - 브랜치를 만들기 전에 develop을 pull 받는다.
-
-3. 만든 브랜치에서 작업하고, 커밋은 하나의 논리적 작업 단위로 쪼개 컨벤션에 맞춰 작성한다.
-
-4. 작업이 끝나면 에러 없이 실행되는지 확인한 뒤 push 한다.
-   - PR을 올리기 전에 작업 브랜치에 develop을 pull 받아 충돌을 해결하고 push 하는 것을 권장한다.
-
-5. PR을 작성하고 팀원의 코드 리뷰를 반영한 뒤 develop에 merge 한다.
-   - PR 본문에 Closes #이슈번호를 적어 이슈를 연결한다.
-   - merge 후 작업 브랜치는 삭제한다.
-
-6. 모든 개발이 끝나면 develop을 main에 합친다.
-```
-
-## 📚 문서
-
-- [프로젝트 구조 설명서](docs/PROJECT_STRUCTURE.md)
-- [Python 개발 가이드](docs/dev-stack-python.md)
-- [Git 협업 컨벤션](docs/GIT_CONVENTION.md)
-- [MySQL 연결 가이드](docs/MySqlConnector.md)
-- [벡터 DB 연결 가이드](docs/VectorDBConnector.md)
-- [AI 코딩 도구 공통 규칙](AGENTS.md)
+Python 3.11 · uv · Gradio · LangChain (`langchain-openai`, tool calling) · Pydantic · ChromaDB · MySQL · unittest
